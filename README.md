@@ -267,6 +267,56 @@ The dataset is intended primarily for scientific and methodological research.
 
 Users should acknowledge the dataset in any publication or scientific work making use of it.
 
+## 8. Code and Reproducibility
+
+The `scripts/` folder contains the code used to compute the descriptive statistics of the dataset paper: window-level heart rate (HR) from the green-LED PPG of the three devices, and agreement between the devices.
+
+### 8.1. File layout
+```text
+├── dataset/
+│   ├── 3wz5r7.csv               # one file per participant (six-character code)
+│   ├── 6fj9p2.csv
+│   ├── ...
+│   └── subject_data.csv         # demographic and anthropometric data
+├── scripts/
+│   ├── config.py                # settings:  input/output folder, bootstrap, seed
+│   ├── hrpipe.py                # HR pipeline: filter, peak detection, windowed HR
+│   ├── compute_windows.py       # step 1: window-level HR from the raw signals
+│   ├── agreement_stats.py       # step 2: agreement metrics between devices
+│   ├── plot_recording.py        # step 3: plot activity time series
+│   ├── check_statistics.py      # optional: cross-check CCC/ICC with modules
+│   ├── run_pipeline.py          # runs the steps in order
+│   ├── device_exclusions.csv    # devices excluded from specific recordings
+│   └── requirements.txt         # Python dependencies
+├── .gitignore                   # ignores scripts/results/, __pycache__/, .DS_Store
+├── LICENSE                      # MIT licence of the code
+└── README.md
+```
+
+### 8.2 Usage
+
+pip install -r scripts/requirements.txt
+python scripts/run_all.py
+
+The dataset folder is found automatically if the scripts are inside the repository. To use data stored elsewhere, set `DATA_DIR` in `config.py`, set the environment variable `HR_DATASET_DIR`, or pass `--data-dir`. Every script can also be run alone and has `--help`. Outputs are written to `scripts/results/`.
+
+The `scripts/results/` subfolder is created on the first run. 
+
+For reference, the input/outputs are:
+
+| Step | Script | Input | Output (in `scripts/results/`) |
+|---|---|---|---|
+| 1 | `compute_windows.py` | `dataset/<code>.csv`, `device_exclusions.csv` | `windows.csv`, `devices_excluded_log.csv` |
+| 2 | `agreement_stats.py` | `windows.csv` | `agreement_overall.csv`, `agreement_by_activity.csv` |
+| 3 | `plot_recording.py` | `dataset/<code>.csv` | `recording_<code>.png` |
+| 4 (optional) | `check_statistics.py` | `windows.csv` | printed OK/MISMATCH report (exit status 0 or 1) |
+
+### 8.3 Processing Pipeline Summary
+- PPG: first 5 s used for the DC offset and then discarded; causal 513-tap FIR band-pass 0.5-3.5 Hz with the 2-s group delay compensated.
+- Peaks: Elgendi et al. (2013) two-moving-average detector.
+- HR: median of 60/IBI in 12-s windows moved in 2-s steps (30-210 bpm, at least 3 valid IBIs).
+- Agreement (per device pair): MAE, RMSE, bias, 95% limits of agreement, Pearson r, % within 5 and 10 bpm, MAPE and Lin's CCC; ICC(A,1) for the three devices. 95% CIs by participant-level cluster bootstrap (1000 resamples, seed 7). Results overall and by activity.
+
 ## 9. Citation and License
 
 If you use this dataset in your research, please cite it as follows:
@@ -275,7 +325,7 @@ If you use this dataset in your research, please cite it as follows:
 
 License: CC BY-NC 4.0
 
-## 8. Contact Information
+## 10. Contact Information
 
 For questions regarding the dataset, acquisition protocol, or data interpretation, please contact:
 
