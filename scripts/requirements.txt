@@ -1,0 +1,6 @@
+numpy
+scipy
+pandas
+matplotlib
+# optional, only for check_statistics.py:
+# pingouin
