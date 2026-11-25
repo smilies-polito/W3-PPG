@@ -323,7 +323,8 @@ If you use this dataset in your research, please cite it as follows:
 
 [Insert recommended dataset citation and DOI]
 
-License: CC BY-NC 4.0
+Data: CC BY-NC 4.0.
+Code: MIT (see `LICENSE`).
 
 ## 10. Contact Information
 
