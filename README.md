@@ -295,8 +295,14 @@ The `scripts/` folder contains the code used to compute the descriptive statisti
 
 ### 8.2 Usage Notes
 
+
+```bash
 pip install -r scripts/requirements.txt
+```
+
+```bash
 python scripts/run_pipeline.py
+```
 
 The dataset folder is found automatically if the scripts are inside the repository. To use data stored elsewhere, set `DATA_DIR` in `config.py`, set the environment variable `HR_DATASET_DIR`, or pass `--data-dir`. Every script can also be run alone and has `--help`. Outputs are written to `scripts/results/`.
 
