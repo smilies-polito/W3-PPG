@@ -293,7 +293,7 @@ The `scripts/` folder contains the code used to compute the descriptive statisti
 └── README.md
 ```
 
-### 8.2 Usage
+### 8.2 Usage Notes
 
 pip install -r scripts/requirements.txt
 python scripts/run_all.py
