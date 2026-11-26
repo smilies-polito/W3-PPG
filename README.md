@@ -325,12 +325,14 @@ For reference, the input/outputs are:
 
 ## 9. Citation and License
 
+**Citation**
 If you use this dataset in your research, please cite it as follows:
 
 Londono, S. E., Barrientos Garcia, D. V., RECHICHI, I., Amprimo, G., OLMO, G., & BORZI', L. (2026). W3-PPG: A synchronized multimodal dataset of PPG and inertial signals from multiple wearable devices (Version 1.0.0) [Dataset]. Zenodo.
 
 [DOI] (https://doi.org/10.5281/zenodo.24496086)
 
+**License**
 Data: CC BY-NC 4.0.
 Code: MIT (see `LICENSE`).
 
